@@ -12,6 +12,7 @@ CREATE TABLE items (
   deal_ends DATETIME,
   units_sold INT(11) DEFAULT 0,
   shipping_option VARCHAR(255),
+  banner_image_id INT(11),
   PRIMARY KEY(item_id) 
 );
 
