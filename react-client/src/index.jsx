@@ -12,6 +12,12 @@ class ProductInfo extends React.Component {
     this.state = {
       reminder: false
     }
+
+    this.toggleReminder = this.toggleReminder.bind(this);
+  }
+
+  toggleReminder() {
+    this.setState({reminder: !this.state.reminder});
   }
 
   render() {
@@ -21,7 +27,7 @@ class ProductInfo extends React.Component {
         <Pricing />
         <ReviewInfo />
         <Shipping />
-        <ReminderButton>Remind Me</ReminderButton>
+        <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
       </div>
     )
   }
