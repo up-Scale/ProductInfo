@@ -4,6 +4,7 @@ import Categories from './components/Categories.jsx';
 import Pricing from './components/Pricing.jsx';
 import ReviewInfo from './components/ReviewInfo.jsx';
 import Shipping from './components/Shipping.jsx';
+import ReminderButton from './components/styled-components/ReminderButton.jsx';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class ProductInfo extends React.Component {
         <Pricing />
         <ReviewInfo />
         <Shipping />
+        <ReminderButton>Remind Me</ReminderButton>
       </div>
     )
   }
