@@ -1,5 +1,6 @@
 var express = require('express');
 var parser = require('body-parser');
+var db = require('../db/index.js');
 
 let app = express();
 app.use(parser.json());
