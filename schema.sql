@@ -5,6 +5,7 @@ USE product_info;
 
 CREATE TABLE items (
   item_id INT(11) NOT NULL auto_increment,
+  name VARCHAR(255) NOT NULL,
   price DECIMAL(11,2) NOT NULL,
   sale_price DECIMAL(11,2),
   number_of_reviews INT(11) DEFAULT 0,
