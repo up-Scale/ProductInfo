@@ -1,10 +1,10 @@
 var db = require('mysql');
 var pass = require('../config.js');
 
-db.createConnection({
+const connection = db.createConnection({
   user: 'root',
   password: pass.password,
   database: 'product_info'
 });
 
-module.exports.db = db;
+module.exports.connection = connection;

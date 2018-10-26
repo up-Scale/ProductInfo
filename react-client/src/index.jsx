@@ -5,12 +5,14 @@ import Pricing from './components/Pricing.jsx';
 import ReviewInfo from './components/ReviewInfo.jsx';
 import Shipping from './components/Shipping.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
+var axios = require('axios');
 
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reminder: false
+      reminder: false,
+      info: {}
     }
 
     this.toggleReminder = this.toggleReminder.bind(this);
@@ -18,6 +20,16 @@ class ProductInfo extends React.Component {
 
   toggleReminder() {
     this.setState({reminder: !this.state.reminder});
+  }
+
+  componentDidMount() {
+    let url = window.location.href.split('/');
+    let pathEnd = url[url.length - 1];
+    console.log(pathEnd);
+
+    axios.get('/item/' + pathEnd)
+    .then ( ({data}) => {this.setState({info: data})})
+    .catch( (err) => console.log('error on get: ', err));
   }
 
   render() {
