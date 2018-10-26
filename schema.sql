@@ -32,3 +32,27 @@ CREATE TABLE items_categories(
 
 ALTER TABLE items_categories ADD FOREIGN KEY (itemID) REFERENCES items(item_id);
 ALTER TABLE items_categories ADD FOREIGN KEY (catID) REFERENCES categories(category_id);
+
+
+-- LOAD CATEGORY DATA
+
+load data local infile "./db/categories.txt" into table categories
+fields terminated by '\n'
+(name)
+set category_id = null;
+
+-- LOAD ITEMS DATA
+
+load data local infile "./db/data.txt" into table items
+fields terminated by '|'
+(name, price, sale_price, number_of_reviews, average_score, deal_ends, units_sold, shipping_option)
+set item_id = NULL;
+
+-- LOAD ITEMS_CATEGORIES
+
+load data local infile "./db/items_cats.txt" into table items_categories
+fields terminated by '|'
+(@item.name, @cat.name)
+set id = NULL,
+itemID = (select item_id from items where items.name = @item.name),
+catID = (select category_id from categories where categories.name = @cat.name);
