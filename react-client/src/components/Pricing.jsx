@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Pricing = ({price, salePrice}) => {
+const Pricing = ({prices}) => {
   return(
-    <div>Pricing Placeholder</div>
+    <div>{prices.price} {prices.sale_price}</div>
   )
 }
 
