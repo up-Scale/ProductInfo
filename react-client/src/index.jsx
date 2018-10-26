@@ -28,7 +28,7 @@ class ProductInfo extends React.Component {
     console.log(pathEnd);
 
     axios.get('/item/' + pathEnd)
-    .then ( ({data}) => {this.setState({info: data})})
+    .then ( ({data}) => {this.setState({info: data[0]})})
     .catch( (err) => console.log('error on get: ', err));
   }
 
@@ -36,7 +36,7 @@ class ProductInfo extends React.Component {
     return (
       <div>
         <Categories />
-        <Pricing />
+        <Pricing prices={this.state.info}/>
         <ReviewInfo />
         <Shipping />
         <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
