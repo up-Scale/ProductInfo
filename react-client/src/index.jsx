@@ -12,7 +12,8 @@ class ProductInfo extends React.Component {
     super(props);
     this.state = {
       reminder: false,
-      info: {}
+      info: {},
+      categories: []
     }
 
     this.toggleReminder = this.toggleReminder.bind(this);
@@ -27,14 +28,21 @@ class ProductInfo extends React.Component {
     let pathEnd = url[url.length - 1];
 
     axios.get('/item/' + pathEnd)
-    .then ( ({data}) => {this.setState({info: data[0]})})
+    .then ( ({data}) => {
+      this.setState({info: data[0]});
+      axios.get('/categories/' + pathEnd)
+      .then ( ({data}) => {
+        this.setState({categories: data});
+      })
+      .catch( (err) => console.log('error on get to categories: ', err));
+    })
     .catch( (err) => console.log('error on get: ', err));
   }
 
   render() {
     return (
       <div>
-        <Categories />
+        <Categories categories={this.state.categories}/>
         <Pricing prices={this.state.info}/>
         <ReviewInfo reviews={this.state.info}/>
         <Shipping shipping={this.state.info}/>

@@ -25,7 +25,7 @@ app.get('/categories/:id', (req, res) => {
   let id = req.params.id;
   let q = `select c.name from categories c inner join items_categories ic on (c.category_id = ic.catID)
           inner join items i on (ic.itemID = i.item_id) where i.item_id = ${id}`
-  db.connection.query(q, (err) => {
+  db.connection.query(q, (err, results) => {
     if (err) console.log('error on db category query: ', err);
     else res.send(results);
   })

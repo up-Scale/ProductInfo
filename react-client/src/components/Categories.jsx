@@ -2,7 +2,11 @@ import React from 'react';
 
 const Categories = ({categories}) => {
   return(
-    <div>Categories Placeholder</div>
+    <ul>
+      {categories.map( (cat, i) => 
+        <li key={i}>{cat.name}</li>  
+      )}
+    </ul>
   )
 }
 
