@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Shipping = ({time, unitsSold, shipping}) => {
+const Shipping = ({shipping}) => {
   return(
-    <div>Shipping Placeholder</div>
+    <div>{shipping.deal_ends} {`${shipping.units_sold} sold `} {shipping.shipping_option}</div>
   )
 }
 

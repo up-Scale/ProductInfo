@@ -38,7 +38,7 @@ class ProductInfo extends React.Component {
         <Categories />
         <Pricing prices={this.state.info}/>
         <ReviewInfo reviews={this.state.info}/>
-        <Shipping />
+        <Shipping shipping={this.state.info}/>
         <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
       </div>
     )
