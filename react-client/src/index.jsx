@@ -25,7 +25,6 @@ class ProductInfo extends React.Component {
   componentDidMount() {
     let url = window.location.href.split('/');
     let pathEnd = url[url.length - 1];
-    console.log(pathEnd);
 
     axios.get('/item/' + pathEnd)
     .then ( ({data}) => {this.setState({info: data[0]})})
