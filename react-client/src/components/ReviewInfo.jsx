@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ReviewInfo = ({score, reviews}) => {
+const ReviewInfo = ({reviews}) => {
   return(
-    <div>ReviewInfo Placeholder</div>
+    <div>{reviews.average_score} {`(${reviews.number_of_reviews} reviews)`}</div>
   )
 }
 
