@@ -13,11 +13,21 @@ app.get('/:id', (req, res) => {
 
 app.get('/item/:id', (req, res) => {
   let id = req.params.id;
-  q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option 
+  let q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option 
   from items where items.item_id = ${id}`
   db.connection.query(q, (err, results) => {
     if (err) console.log('error on db query: ', err);
-    else (res.send(results));
+    else res.send(results);
+  })
+})
+
+app.get('/categories/:id', (req, res) => {
+  let id = req.params.id;
+  let q = `select c.name from categories c inner join items_categories ic on (c.category_id = ic.catID)
+          inner join items i on (ic.itemID = i.item_id) where i.item_id = ${id}`
+  db.connection.query(q, (err) => {
+    if (err) console.log('error on db category query: ', err);
+    else res.send(results);
   })
 })
 
