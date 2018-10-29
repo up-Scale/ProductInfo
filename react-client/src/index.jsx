@@ -25,7 +25,6 @@ class ProductInfo extends React.Component {
   componentDidMount() {
     let url = window.location.href.split('/');
     let pathEnd = url[url.length - 1];
-    console.log(pathEnd);
 
     axios.get('/item/' + pathEnd)
     .then ( ({data}) => {this.setState({info: data[0]})})
@@ -38,7 +37,7 @@ class ProductInfo extends React.Component {
         <Categories />
         <Pricing prices={this.state.info}/>
         <ReviewInfo reviews={this.state.info}/>
-        <Shipping />
+        <Shipping shipping={this.state.info}/>
         <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
       </div>
     )

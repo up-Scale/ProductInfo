@@ -13,7 +13,7 @@ app.get('/:id', (req, res) => {
 
 app.get('/item/:id', (req, res) => {
   let id = req.params.id;
-  q = `select name, price, sale_price, number_of_reviews, average_score, deal_ends, units_sold, shipping_option 
+  q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option 
   from items where items.item_id = ${id}`
   db.connection.query(q, (err, results) => {
     if (err) console.log('error on db query: ', err);
