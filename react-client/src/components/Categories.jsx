@@ -1,12 +1,14 @@
 import React from 'react';
+import ListUl from './styled-components/Ul.jsx';
+import ListLi from './styled-components/Li.jsx';
 
 const Categories = ({categories}) => {
   return(
-    <ul>
+    <ListUl>
       {categories.map( (cat, i) => 
-        <li key={i}>{cat.name}</li>  
+        <ListLi key={i}>{`${cat.name} > `}</ListLi>  
       )}
-    </ul>
+    </ListUl>
   )
 }
 
