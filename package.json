@@ -26,6 +26,8 @@
     "mysql": "^2.16.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-native-stars": "^1.1.5",
+    "react-stars": "^2.2.5",
     "styled-components": "^4.0.2"
   },
   "devDependencies": {
