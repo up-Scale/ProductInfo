@@ -5,6 +5,7 @@ import Pricing from './components/Pricing.jsx';
 import ReviewInfo from './components/ReviewInfo.jsx';
 import Shipping from './components/Shipping.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
+import ItemName from './components/styled-components/ItemName.jsx';
 var axios = require('axios');
 
 class ProductInfo extends React.Component {
@@ -43,6 +44,7 @@ class ProductInfo extends React.Component {
     return (
       <div>
         <Categories categories={this.state.categories}/>
+        <ItemName>{this.state.info.name}</ItemName>
         <Pricing prices={this.state.info}/>
         <ReviewInfo reviews={this.state.info}/>
         <Shipping shipping={this.state.info}/>
