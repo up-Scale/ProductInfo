@@ -8,7 +8,7 @@ import ReminderButton from './components/styled-components/ReminderButton.jsx';
 import ItemName from './components/styled-components/ItemName.jsx';
 var axios = require('axios');
 
-class ProductInfo extends React.Component {
+export default class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,4 +54,4 @@ class ProductInfo extends React.Component {
   }
 }
 
-ReactDOM.render(<ProductInfo />, document.getElementById('product-info'));
+// ReactDOM.render(<ProductInfo />, document.getElementById('product-info'));
