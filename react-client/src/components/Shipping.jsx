@@ -1,5 +1,6 @@
 import React from 'react';
 import TimeLeft from './styled-components/TimeLeft.jsx';
+import UnitsSold from './styled-components/UnitsSold.jsx';
 
 const Shipping = ({shipping}) => {
 
@@ -14,7 +15,7 @@ const Shipping = ({shipping}) => {
   return(
     <div>
       {getTimeDiff((new Date(shipping.time * 1000) - new Date()) / 1000)}  
-      {`${shipping.units_sold} sold `} 
+      <UnitsSold>{`${shipping.units_sold} sold `}</UnitsSold> 
       {shipping.shipping_option}
     </div>
   )
