@@ -5,8 +5,10 @@ import Pricing from './components/Pricing.jsx';
 import PricingLine from './components/styled-components/PricingLine.jsx';
 import ReviewInfo from './components/ReviewInfo.jsx';
 import Shipping from './components/Shipping.jsx';
+import JoinDropButton from './components/styled-components/JoinDropButton.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
 import ItemName from './components/styled-components/ItemName.jsx';
+import ItemNameLine from './components/styled-components/ItemNameLine.jsx';
 var axios = require('axios');
 
 export default class ProductInfo extends React.Component {
@@ -46,8 +48,12 @@ export default class ProductInfo extends React.Component {
     return (
       <div>
         <Categories categories={this.state.categories}/>
-        <ItemName>{this.state.info.name}</ItemName>
-
+        
+        <ItemNameLine>
+          <ItemName>{this.state.info.name}</ItemName>
+          <JoinDropButton>Join Drop</JoinDropButton>
+        </ItemNameLine>
+        
         <PricingLine>
           <Pricing prices={this.state.info}/>
           <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
