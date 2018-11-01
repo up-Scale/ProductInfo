@@ -27,6 +27,15 @@ app.get('/categories/:prod_name', (req, res) => {
   })
 })
 
+app.post('/drop/:prod_name', (req, res) => {
+  let params = req.params.prod_name;
+  let q;
+  db.connection.query(q, params, (err) => {
+    if (err) console.log('error on db drop query: ', err);
+    else res.sendStatus(201);
+  })
+})
+
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('react-client/dist/index.html'));
 })

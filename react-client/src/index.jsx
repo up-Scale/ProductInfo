@@ -21,11 +21,18 @@ export default class ProductInfo extends React.Component {
     }
 
     this.toggleReminder = this.toggleReminder.bind(this);
-    //this.joinDrop = this.joinDrop.bind(this);
+    this.joinDrop = this.joinDrop.bind(this);
   }
 
   toggleReminder() {
     this.setState({reminder: !this.state.reminder});
+  }
+
+  joinDrop() {
+    let pathEnd = this.getEndPoint();
+    axios.post('/drop/' + pathEnd)
+    .then( (response) => {this.getItemData(pathEnd)})
+    .catch ( (err) => {console.log('error on post to drop: ', err)});
   }
 
   getItemData(itemName) {
@@ -44,9 +51,13 @@ export default class ProductInfo extends React.Component {
     .catch( (err) => {console.log('error on get to categories: ', err)});
   }
 
-  componentDidMount() {
+  getEndPoint() {
     let url = window.location.href.split('/');
-    let pathEnd = url[url.length - 1] || 'flashlight';
+    return url[url.length - 1] || 'flashlight';
+  }
+
+  componentDidMount() {
+    let pathEnd = this.getEndPoint()
 
     this.getItemData(pathEnd);
     this.getCategories(pathEnd);
@@ -59,7 +70,7 @@ export default class ProductInfo extends React.Component {
 
         <ItemNameLine>
           <ItemName>{this.state.info.name}</ItemName>
-          <JoinDropButton>Join Drop</JoinDropButton>
+          <JoinDropButton onClick={this.joinDrop}>Join Drop</JoinDropButton>
         </ItemNameLine>
         
         <PricingLine>
