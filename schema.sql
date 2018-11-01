@@ -14,6 +14,7 @@ CREATE TABLE items (
   units_sold INT(11) DEFAULT 0,
   shipping_option VARCHAR(255),
   banner_image_id INT(11),
+  drop_count INT(11),
   PRIMARY KEY(item_id) 
 );
 
