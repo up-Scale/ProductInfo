@@ -1,10 +1,11 @@
 import React from 'react';
+import ReviewLine from './styled-components/ReviewLine.jsx';
 import ReviewsSpan from './styled-components/ReviewsSpan.jsx';
 import ReactStars from 'react-stars'
 
 const ReviewInfo = ({reviews}) => {
   return(
-    <span style={{display:'inline'}}>
+    <ReviewLine>
       <ReactStars
         count={5}
         value={reviews.average_score}
@@ -15,7 +16,7 @@ const ReviewInfo = ({reviews}) => {
         edit={false}
       />
       <ReviewsSpan>{`(${reviews.number_of_reviews} reviews)`}</ReviewsSpan>
-    </span>
+    </ReviewLine>
   )
 }
 

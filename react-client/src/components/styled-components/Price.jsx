@@ -8,6 +8,7 @@ const Price = styled.span`
   font-size: 18px;
   font-weight: 400;
   font-style: italic;
+  margin-left: 10px;
   text-decoration: line-through;
 
   ::before {

@@ -6,7 +6,9 @@ const Categories = ({categories}) => {
   return(
     <ListUl>
       {categories.map( (cat, i) => 
-        <ListLi key={i}>{`${cat.name} > `}</ListLi>  
+        <ListLi key={i}>
+          {i === categories.length - 1 ? `${cat.name}`: `${cat.name} > `}
+        </ListLi>  
       )}
     </ListUl>
   )

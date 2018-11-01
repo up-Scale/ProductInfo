@@ -8,7 +8,12 @@ const UnitsSold = styled.span`
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.9px;
+  margin: 10px;
   text-transform: uppercase;
+
+  ::before {
+    content: '📦 ';
+  }
 `
 
 export default UnitsSold;

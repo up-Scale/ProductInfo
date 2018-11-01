@@ -2,6 +2,8 @@ import React from 'react';
 import TimeLeft from './styled-components/TimeLeft.jsx';
 import UnitsSold from './styled-components/UnitsSold.jsx';
 import ShippingType from './styled-components/ShippingType.jsx';
+import { Icon } from 'react-icons-kit';
+import {ic_watch_later} from 'react-icons-kit/md/ic_watch_later';
 
 const Shipping = ({shipping}) => {
 

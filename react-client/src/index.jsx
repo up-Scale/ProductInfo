@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Categories from './components/Categories.jsx';
 import Pricing from './components/Pricing.jsx';
+import PricingLine from './components/styled-components/PricingLine.jsx';
 import ReviewInfo from './components/ReviewInfo.jsx';
 import Shipping from './components/Shipping.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
@@ -46,10 +47,15 @@ export default class ProductInfo extends React.Component {
       <div>
         <Categories categories={this.state.categories}/>
         <ItemName>{this.state.info.name}</ItemName>
-        <Pricing prices={this.state.info}/>
+
+        <PricingLine>
+          <Pricing prices={this.state.info}/>
+          <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
+        </PricingLine>
+        
         <ReviewInfo reviews={this.state.info}/>
         <Shipping shipping={this.state.info}/>
-        <ReminderButton onClick={this.toggleReminder} reminder={this.state.reminder}>Remind Me</ReminderButton>
+        
       </div>
     )
   }

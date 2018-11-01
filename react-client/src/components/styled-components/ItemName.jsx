@@ -6,6 +6,7 @@ const ItemName = styled.h1`
   font-size: 24px;
   font-weight: 500;
   letter-spacing: -.4px;
+  margin-left: 40px
   color: #042b28;
 `
 
