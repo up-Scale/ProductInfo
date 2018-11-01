@@ -54,4 +54,5 @@ export default class ProductInfo extends React.Component {
   }
 }
 
+window.Info = ProductInfo;
 // ReactDOM.render(<ProductInfo />, document.getElementById('product-info'));
