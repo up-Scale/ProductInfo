@@ -27,8 +27,9 @@ export default class ProductInfo extends React.Component {
   componentDidMount() {
     let url = window.location.href.split('/');
     let pathEnd = url[url.length - 1];
+    if (!pathEnd) pathEnd = 'flashlight';
 
-    axios.get('/item/' + pathEnd)
+    axios.get('/buy/' + pathEnd)
     .then ( ({data}) => {
       this.setState({info: data[0]});
       axios.get('/categories/' + pathEnd)
