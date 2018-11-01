@@ -21,34 +21,42 @@ export default class ProductInfo extends React.Component {
     }
 
     this.toggleReminder = this.toggleReminder.bind(this);
+    //this.joinDrop = this.joinDrop.bind(this);
   }
 
   toggleReminder() {
     this.setState({reminder: !this.state.reminder});
   }
 
+  getItemData(itemName) {
+    axios.get('/buy/' + itemName)
+    .then( ({data}) => {
+      this.setState({info: data[0]})
+    })
+    .catch( (err) => {console.log('error on get: ', err)});
+  }
+
+  getCategories(itemName) {
+    axios.get('/categories/' + itemName)
+    .then( ({data}) => {
+      this.setState({categories: data})
+    })
+    .catch( (err) => {console.log('error on get to categories: ', err)});
+  }
+
   componentDidMount() {
     let url = window.location.href.split('/');
-    let pathEnd = url[url.length - 1];
-    if (!pathEnd) pathEnd = 'flashlight';
+    let pathEnd = url[url.length - 1] || 'flashlight';
 
-    axios.get('/buy/' + pathEnd)
-    .then ( ({data}) => {
-      this.setState({info: data[0]});
-      axios.get('/categories/' + pathEnd)
-      .then ( ({data}) => {
-        this.setState({categories: data});
-      })
-      .catch( (err) => console.log('error on get to categories: ', err));
-    })
-    .catch( (err) => console.log('error on get: ', err));
+    this.getItemData(pathEnd);
+    this.getCategories(pathEnd);
   }
 
   render() {
     return (
       <div>
         <Categories categories={this.state.categories}/>
-        
+
         <ItemNameLine>
           <ItemName>{this.state.info.name}</ItemName>
           <JoinDropButton>Join Drop</JoinDropButton>
