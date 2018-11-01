@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.get('/buy/:prod_name', (req, res) => {
   let prod_name = req.params.prod_name;
-  let q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option 
+  let q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option, drop_count 
   from items where items.name = '${prod_name}'`
   db.connection.query(q, (err, results) => {
     if (err) console.log('error on db query: ', err);
@@ -27,10 +27,21 @@ app.get('/categories/:prod_name', (req, res) => {
   })
 })
 
-app.post('/drop/:prod_name', (req, res) => {
-  let params = req.params.prod_name;
-  let q;
-  db.connection.query(q, params, (err) => {
+app.post('/drop', (req, res) => {
+  var prod_name = req.body.name;
+  var count = req.body.drop_count + 1;
+  if (count % 5 === 0) {
+    var oldPrice = req.body.sale_price || req.body.price;
+    var newPrice = oldPrice * .9;
+    var q = `update items set drop_count = ${count},
+            price = ${oldPrice},
+            sale_price = ${newPrice}
+            where name = '${prod_name}'`
+  } else {
+    var q = `update items set drop_count = ${count} where name = '${prod_name}'`
+  }
+  
+  db.connection.query(q, (err) => {
     if (err) console.log('error on db drop query: ', err);
     else res.sendStatus(201);
   })

@@ -29,9 +29,8 @@ export default class ProductInfo extends React.Component {
   }
 
   joinDrop() {
-    let pathEnd = this.getEndPoint();
-    axios.post('/drop/' + pathEnd)
-    .then( (response) => {this.getItemData(pathEnd)})
+    axios.post('/drop', this.state.info)
+    .then( (response) => {this.getItemData(this.state.info.name)})
     .catch ( (err) => {console.log('error on post to drop: ', err)});
   }
 
