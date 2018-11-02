@@ -12,7 +12,7 @@ app.get('/buy/:prod_name', (req, res) => {
   let q = `select name, price, sale_price, number_of_reviews, average_score, unix_timestamp(deal_ends) as time, units_sold, shipping_option, drop_count 
   from items where items.name = '${prod_name}'`
   db.connection.query(q, (err, results) => {
-    if (err) console.log('error on db query: ', err);
+    if (err) res.sendStatus(500);
     else res.send(results);
   })
 })
@@ -22,7 +22,7 @@ app.get('/categories/:prod_name', (req, res) => {
   let q = `select c.name from categories c inner join items_categories ic on (c.category_id = ic.catID)
           inner join items i on (ic.itemID = i.item_id) where i.name = '${prod_name}'`
   db.connection.query(q, (err, results) => {
-    if (err) console.log('error on db category query: ', err);
+    if (err) res.sendStatus(500);
     else res.send(results);
   })
 })
@@ -42,7 +42,7 @@ app.post('/drop', (req, res) => {
   }
   
   db.connection.query(q, (err) => {
-    if (err) console.log('error on db drop query: ', err);
+    if (err) res.sendStatus(500);
     else res.sendStatus(201);
   })
 })
