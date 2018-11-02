@@ -48,9 +48,7 @@ app.post('/api/drop', (req, res) => {
 })
 
 app.get('/buy/*', (req, res) => {
-  console.log('inside app.get catch all')
   res.sendFile(path.resolve('react-client/dist/index.html'));
-  //res.sendFile(__dirname + '/../react-client/dist/index.html');
 })
 
 let port = 3001;
