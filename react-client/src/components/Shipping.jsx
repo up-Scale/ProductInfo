@@ -9,7 +9,9 @@ const Shipping = ({shipping}) => {
     let days = Math.floor(diff / 86400)
     let hours = Math.floor(diff / 3600) % 24
 
-    if (days > 0) return <TimeLeft style={{color:"rgb(132, 148, 147)"}}>{`${days} days left`}</TimeLeft>
+    if (diff < 0) return <TimeLeft style={{color:"rgb(255, 114, 118)"}}>Drop has Closed</TimeLeft>
+    if (days > 1) return <TimeLeft style={{color:"rgb(132, 148, 147)"}}>{`${days} days left`}</TimeLeft>
+    if (days === 1) return <TimeLeft style={{color:"rgb(132, 148, 147)"}}>{`${days} day left`}</TimeLeft>
     else return <TimeLeft style={{color:"rgb(255, 114, 118)"}}>{`${hours} hours left`}</TimeLeft>
   }
 

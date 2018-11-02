@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
-    "seed": "mysql -u root -p < schema.sql"
+    "seed": "mysql -h fec-product-info.clj3efkrub7r.us-east-2.rds.amazonaws.com -u johnsangiolo -p -P 3306 < schema.sql"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DeltaDrop/dd-ProductInfo/issues"
-  },
+  }, 
   "homepage": "https://github.com/DeltaDrop/dd-ProductInfo#readme",
   "dependencies": {
     "axios": "^0.18.0",
