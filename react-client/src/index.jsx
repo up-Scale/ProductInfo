@@ -29,13 +29,13 @@ export default class ProductInfo extends React.Component {
   }
 
   joinDrop() {
-    axios.post('/drop', this.state.info)
+    axios.post('/api/drop', this.state.info)
     .then( (response) => {this.getItemData(this.state.info.name)})
     .catch ( (err) => {console.log('error on post to drop: ', err)});
   }
 
   getItemData(itemName) {
-    axios.get('/buy/' + itemName)
+    axios.get('/api/' + itemName)
     .then( ({data}) => {
       this.setState({info: data[0]})
     })
@@ -43,7 +43,7 @@ export default class ProductInfo extends React.Component {
   }
 
   getCategories(itemName) {
-    axios.get('/categories/' + itemName)
+    axios.get('/api/categories/' + itemName)
     .then( ({data}) => {
       this.setState({categories: data})
     })
