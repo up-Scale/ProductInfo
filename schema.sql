@@ -14,6 +14,7 @@ CREATE TABLE items (
   units_sold INT(11) DEFAULT 0,
   shipping_option VARCHAR(255),
   banner_image_id INT(11),
+  drop_count INT(11),
   PRIMARY KEY(item_id) 
 );
 
@@ -45,7 +46,7 @@ set category_id = null;
 
 load data local infile "./db/data.txt" into table items
 fields terminated by '|'
-(name, price, sale_price, number_of_reviews, average_score, deal_ends, units_sold, shipping_option)
+(name, price, sale_price, number_of_reviews, average_score, deal_ends, units_sold, shipping_option, drop_count)
 set item_id = NULL;
 
 -- LOAD ITEMS_CATEGORIES
