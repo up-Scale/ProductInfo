@@ -1,9 +1,10 @@
 var db = require('mysql');
-var pass = require('../config.js');
+//var pass = require('../config.js');
 
 const connection = db.createConnection({
-  user: 'root',
-  password: pass.password,
+  host: 'fec-product-info.clj3efkrub7r.us-east-2.rds.amazonaws.com',
+  user: 'johnsangiolo',
+  password: 'Seniorphase014',
   database: 'product_info'
 });
 
