@@ -73,75 +73,56 @@
 
 
 
-//    SEQUELIZE
+//    KNEX
 
 
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('productInfo', 'kennisilverio', '', {
-  host: 'localhost',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
+var knex = require('knex')({
+  client: 'pg',
+  version: '7.6',
+  connection: {
+    host : 'localhost',
+    user : 'kennisilverio',
+    password : '',
+    database : 'productInfo'
   },
-})
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-const Item = sequelize.define('item', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-  },
-  name: {
-    type: Sequelize.STRING, 
-  },
-  price: {
-    type: Sequelize.DECIMAL,
-  }, 
-  sale_price: {
-    type: Sequelize.DECIMAL,
-  }, 
-  average_score: {
-    type: Sequelize.INTEGER,
-    max: 5,
-  }, 
-  deal_ends: {
-    type: Sequelize.DATE,
-  }, 
-  units_sold: {
-    type: Sequelize.INTEGER,
-  }, 
-  shipping_option: {
-    type: Sequelize.STRING,
-  }, 
-  drop_count: {
-    type: Sequelize.INTEGER,
-  }
+  pool: { min: 0, max: 7 },
+  useNullAsDefault: true,
 });
 
-const Category = sequelize.define('category', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-  },
-  name: {
-    type: Sequelize.STRING,
+
+knex.schema.hasTable('items').then(function(exists) {
+  if (!exists) {
+    knex.schema.createTable('items', function (table) {
+      table.increments()
+      table.string(name)
+      table.decimal(price)
+      table.decimale(sale_price)
+      table.integer(average_score)
+      table.date(deal_ends)
+      table.integer(units_sold)
+      table.string(shipping_option)
+      table.integer(drop_count)
+    })
+    .then(()=> console.log("item table created"), knex.destroy())
+    .catch(err => console.log("error in create item table"))
   }
 })
 
-  // REDIS
+knex.schema.hasTable('categories').then(function(exists) {
+  if (!exists) {
+    knex.schema.createTable('categories', function (table) {
+      table.increments()
+      table.string(name)
+    })
+    .then(()=> console.log("categories table created"), knex.destroy())
+    .catch(err => console.log("error in create categories table"))
+  }
+})
+
+
+
+// REDIS
 module.exports = {
-  Item : Item,
-  Category: Category,
+  knex: knex,
 }
 

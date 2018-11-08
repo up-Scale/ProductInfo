@@ -1,4 +1,4 @@
-const {Item, Category} = require('./index.js')
+const knex = require('./index.js').knex
 const faker = require('faker')
 
 // insert into items (
@@ -32,37 +32,18 @@ const genProduct = faker.commerce.product();
 //                  .catch(err => console.log(err, "error in seed file categories"))
 // }
 
-Item.sync({force: true})
-    .then(() => {
-        for (var i = 0, p = Promise.resolve(); i < 100000; i++){
-            p = p.then(_ => new Promise(resolve => {
-                Item.create({
-                    name: genProductName,
-                    price: genPrice,
-                    sale_price: genSalesPrice,
-                    average_score: genAverageScore,
-                    deal_ends: genDealEndDate,
-                    units_sold: genUnitsSold,
-                    shipping_option: genShippingOpt,
-                    drop_count: genDropCount,
-                })
-                resolve();
-            }))
-            .catch(err => console.log(err, "err @ Item create"))
-        }
-    })
-    .catch(err => console.log(err, "err @ Item sync"))
+knex('items').insert({
+    name: genProductName,
+    price: genPrice,
+    sale_price: genSalesPrice,
+    average_score: genAverageScore,
+    deal_ends: genDealEndDate,
+    units_sold: genUnitsSold,
+    shipping_option: genShippingOpt,
+    drop_count: genDropCount,
+})
 
-Category.sync({force: true})
-        .then(() => {
-            for (var i = 0, p = Promise.resolve(); i < 100000; i++){
-                p = p.then(_ => new Promise(resolve => {
-                    Category.create({
-                        name: genProduct,
-                    })
-                    resolve();
-                }))
-                .catch(err => console.log(err, "err @ Item create"))
-            }
-        })
-        .catch(err => console.log(err, "err @ Item sync"))
+
+knex('categories').insert({
+    name: genProduct,
+})
