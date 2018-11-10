@@ -85,37 +85,37 @@ var knex = require('knex')({
     password : '',
     database : 'productInfo'
   },
-  pool: { min: 0, max: 7 },
-  useNullAsDefault: true,
-});
+  max: 300,
+})
+// .catch(err => console.log(err, "err on db connect"))
 
 
 knex.schema.hasTable('items').then(function(exists) {
   if (!exists) {
-    knex.schema.createTable('items', function (table) {
+    return knex.schema.createTable('items', function (table) {
       table.increments()
-      table.string(name)
-      table.decimal(price)
-      table.decimale(sale_price)
-      table.integer(average_score)
-      table.date(deal_ends)
-      table.integer(units_sold)
-      table.string(shipping_option)
-      table.integer(drop_count)
+      table.string('name')
+      table.decimal('price')
+      table.decimal('sale_price')
+      table.integer('average_score')
+      table.date('deal_ends')
+      table.integer('units_sold')
+      table.string('shipping_option')
+      table.integer('drop_count')
     })
-    .then(()=> console.log("item table created"), knex.destroy())
-    .catch(err => console.log("error in create item table"))
+    .then(()=> console.log("item table created"))
+    .catch(err => console.log(err, "error in create item table"))
   }
 })
 
 knex.schema.hasTable('categories').then(function(exists) {
   if (!exists) {
-    knex.schema.createTable('categories', function (table) {
+    return knex.schema.createTable('categories', function (table) {
       table.increments()
-      table.string(name)
+      table.string('name')
     })
-    .then(()=> console.log("categories table created"), knex.destroy())
-    .catch(err => console.log("error in create categories table"))
+    .then(()=> console.log("categories table created"))
+    .catch(err => console.log(err, "error in create categories table"))
   }
 })
 
