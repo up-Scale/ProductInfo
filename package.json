@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/index.js",
+    "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
-    "seed": "mysql -h fec-product-info.clj3efkrub7r.us-east-2.rds.amazonaws.com -u johnsangiolo -p -P 3306 < schema.sql"
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
   },
   "repository": {
     "type": "git",
@@ -17,17 +18,22 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DeltaDrop/dd-ProductInfo/issues"
-  }, 
+  },
   "homepage": "https://github.com/DeltaDrop/dd-ProductInfo#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "knex": "^0.15.2",
     "mysql": "^2.16.0",
+    "pg": "^7.6.1",
+    "postgresql": "0.0.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-native-stars": "^1.1.5",
     "react-stars": "^2.2.5",
+    "sequelize": "^4.41.1",
     "styled-components": "^4.0.2"
   },
   "devDependencies": {
