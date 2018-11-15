@@ -76,53 +76,82 @@
 //    KNEX
 
 
-var knex = require('knex')({
-  client: 'pg',
-  version: '7.6',
-  connection: {
-    host : 'localhost',
-    user : 'kennisilverio',
-    password : '',
-    database : 'productInfo'
-  },
-  max: 300,
-})
-// .catch(err => console.log(err, "err on db connect"))
+// var knex = require('knex')({
+//   client: 'pg',
+//   version: '7.6',
+//   connection: {
+//     host : 'localhost',
+//     user : 'kennisilverio',
+//     password : '',
+//     database : 'productInfo'
+//   },
+//   max: 300,
+// })
+// // .catch(err => console.log(err, "err on db connect"))
 
 
-knex.schema.hasTable('items').then(function(exists) {
-  if (!exists) {
-    return knex.schema.createTable('items', function (table) {
-      table.increments()
-      table.string('name')
-      table.decimal('price')
-      table.decimal('sale_price')
-      table.integer('average_score')
-      table.date('deal_ends')
-      table.integer('units_sold')
-      table.string('shipping_option')
-      table.integer('drop_count')
-    })
-    .then(()=> console.log("item table created"))
-    .catch(err => console.log(err, "error in create item table"))
-  }
-})
+// knex.schema.hasTable('items').then(function(exists) {
+//   if (!exists) {
+//     return knex.schema.createTable('items', function (table) {
+//       table.increments()
+//       table.string('name')
+//       table.decimal('price')
+//       table.decimal('sale_price')
+//       table.integer('average_score')
+//       table.date('deal_ends')
+//       table.integer('units_sold')
+//       table.string('shipping_option')
+//       table.integer('drop_count')
+//     })
+//     .then(()=> console.log("item table created"))
+//     .catch(err => console.log(err, "error in create item table"))
+//   }
+// })
 
-knex.schema.hasTable('categories').then(function(exists) {
-  if (!exists) {
-    return knex.schema.createTable('categories', function (table) {
-      table.increments()
-      table.string('name')
-    })
-    .then(()=> console.log("categories table created"))
-    .catch(err => console.log(err, "error in create categories table"))
-  }
-})
+// knex.schema.hasTable('categories').then(function(exists) {
+//   if (!exists) {
+//     return knex.schema.createTable('categories', function (table) {
+//       table.increments()
+//       table.string('name')
+//     })
+//     .then(()=> console.log("categories table created"))
+//     .catch(err => console.log(err, "error in create categories table"))
+//   }
+// })
+// module.exports = {
+//   knex: knex,
+// }
 
+//        MONGODB
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/productInfo', { useNewUrlParser: true })
+mongoose.Promise = global.Promise;
 
-// REDIS
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+db.once('open', function() {
+  console.log('mongoose connected successfully');
+});
+
+var productSchema = mongoose.Schema({
+  productName: String,
+  price: mongoose.Schema.Types.Decimal128,
+  sale_price: mongoose.Schema.Types.Decimal128,
+  average_score: String,
+  deal_ends: Date,
+  units_sold: Number,
+  shipping_option: String,
+  drop_count: Number,
+});
+
+var Product = mongoose.model('Product', productSchema);
+
+db.close();
+
 module.exports = {
-  knex: knex,
+  db: db,
+  Product: Product
 }
-

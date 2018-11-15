@@ -8,7 +8,9 @@
     "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "mongoSeed": "bash db/mongo/seed.sh",
+    "populate": "node db/mongo/seed.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "knex": "^0.15.2",
+    "mongodb": "^3.1.9",
+    "mongoose": "^5.3.11",
     "mysql": "^2.16.0",
     "pg": "^7.6.1",
     "postgresql": "0.0.1",
