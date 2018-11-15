@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         table.string('name')
         table.decimal('price')
         table.decimal('sale_price')
-        table.integer('average_score')
+        table.string('average_score')
         table.date('deal_ends')
         table.integer('units_sold')
         table.string('shipping_option')
