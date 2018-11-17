@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/DeltaDrop/dd-ProductInfo#readme",
   "dependencies": {
+    "artillery": "^1.6.0-25",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",

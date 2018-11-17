@@ -53,8 +53,10 @@ var seed = () => {
     var genUnitsSold = faker.random.number();
     var genShippingOpt = "Free Shipping to USA";
     var genDropCount = 1;
+    var genCatName = genProductName.split(" ")[genProductName.split(" ").length-1];
 
-    prod += genProductName + ", " + genPrice + ", " + genSalesPrice + ", " + genAverageScore + ", " + genDealEndDate + ", " + genUnitsSold + ", " + genShippingOpt + ", " + genDropCount + "\n"
+
+    prod += genProductName + ", " + genPrice + ", " + genSalesPrice + ", " + genAverageScore + ", " + genDealEndDate + ", " + genUnitsSold + ", " + genShippingOpt + ", " + genDropCount + ", " + genCatName + "\n"
 
   }
   stream.write(prod)

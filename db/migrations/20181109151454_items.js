@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
         table.integer('units_sold')
         table.string('shipping_option')
         table.integer('drop_count')
+        table.string('category')
     })
   ])
 };
