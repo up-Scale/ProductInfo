@@ -47,8 +47,26 @@ exports.seed = async function(knex, Promise) {
         var genUnitsSold = faker.random.number();
         var genShippingOpt = "Free Shipping to USA";
         var genDropCount = 1;
+        var genCatName = genProductName.split(" ")[genProductName.split(" ").length-1];
         
-        itemArr.push({
+          // for (var k in row){
+          //   if (k === "name") {
+          //     if(row[k] === genProductName){
+          //       itemArr.push({
+          //         name: genProductName + `${k}`,
+          //         price: genPrice,
+          //         sale_price: genSalesPrice,
+          //         average_score: genAverageScore,
+          //         deal_ends: genDealEndDate,
+          //         units_sold: genUnitsSold,
+          //         shipping_option: genShippingOpt,
+          //         drop_count: genDropCount,
+          //         category: genCatName,
+          //       })
+          //     }
+          //   }
+          // }
+          itemArr.push({
             name: genProductName,
             price: genPrice,
             sale_price: genSalesPrice,
@@ -57,17 +75,20 @@ exports.seed = async function(knex, Promise) {
             units_sold: genUnitsSold,
             shipping_option: genShippingOpt,
             drop_count: genDropCount,
-        })
+            category: genCatName,
+          })
+        // })
     }
-          await knex.transaction((tr) => {
-            return knex.batchInsert('items', itemArr)
-                       .transacting(tr)
-                       .then(tr.commit)
-                       .catch(tr.rollback)
-                       .catch(err => console.log("Double error"))            
-        })
-        .catch(err => {console.log(err, 'error in seed file items')})
-      }
+    await knex.transaction((tr) => {
+      return knex.batchInsert('items', itemArr)
+                  .transacting(tr)
+                  .then(tr.commit)
+                  .catch(tr.rollback)
+                  .catch(err => console.log("Double error"))            
+    })
+    .then(() => console.log(`${i} set of 1000 items added`))
+    .catch(err => {console.log(err, 'error in seed file items')})
+  }
 
       console.timeEnd("running")
 };

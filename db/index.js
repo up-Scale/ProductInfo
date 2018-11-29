@@ -78,16 +78,15 @@
 
 // var knex = require('knex')({
 //   client: 'pg',
-//   version: '7.6',
+//   debug: true,
 //   connection: {
 //     host : 'localhost',
 //     user : 'kennisilverio',
 //     password : '',
 //     database : 'productInfo'
-//   },
-//   max: 300,
+//   }
 // })
-// // .catch(err => console.log(err, "err on db connect"))
+
 
 
 // knex.schema.hasTable('items').then(function(exists) {
@@ -118,40 +117,41 @@
 //     .catch(err => console.log(err, "error in create categories table"))
 //   }
 // })
+
 // module.exports = {
 //   knex: knex,
 // }
 
 //        MONGODB
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/productInfo', { useNewUrlParser: true })
-mongoose.Promise = global.Promise;
+// var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/productInfo', { useNewUrlParser: true })
+// mongoose.Promise = global.Promise;
 
-var db = mongoose.connection;
+// var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-db.once('open', function() {
-  console.log('mongoose connected successfully');
-});
+// db.once('open', function() {
+//   console.log('mongoose connected successfully');
+// });
 
-var productSchema = mongoose.Schema({
-  productName: String,
-  price: mongoose.Schema.Types.Decimal128,
-  sale_price: mongoose.Schema.Types.Decimal128,
-  average_score: String,
-  deal_ends: Date,
-  units_sold: Number,
-  shipping_option: String,
-  drop_count: Number,
-});
+// var productSchema = mongoose.Schema({
+//   productName: String,
+//   price: mongoose.Schema.Types.Decimal128,
+//   sale_price: mongoose.Schema.Types.Decimal128,
+//   average_score: String,
+//   deal_ends: Date,
+//   units_sold: Number,
+//   shipping_option: String,
+//   drop_count: Number,
+// });
 
-var Product = mongoose.model('Product', productSchema);
+// var Product = mongoose.model('Product', productSchema);
 
-db.close();
+// db.close();
 
-module.exports = {
-  db: db,
-  Product: Product
-}
+// module.exports = {
+//   db: db,
+//   Product: Product,
+// }

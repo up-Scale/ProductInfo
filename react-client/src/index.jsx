@@ -9,6 +9,7 @@ import JoinDropButton from './components/styled-components/JoinDropButton.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
 import ItemName from './components/styled-components/ItemName.jsx';
 import ItemNameLine from './components/styled-components/ItemNameLine.jsx';
+
 var axios = require('axios');
 
 export default class ProductInfo extends React.Component {
@@ -16,8 +17,8 @@ export default class ProductInfo extends React.Component {
     super(props);
     this.state = {
       reminder: false,
-      info: {},
-      categories: []
+      info: this.props.info || {},
+      categories: this.props.categories || []
     }
 
     this.toggleReminder = this.toggleReminder.bind(this);
@@ -30,36 +31,39 @@ export default class ProductInfo extends React.Component {
 
   joinDrop() {
     axios.post('/api/drop', this.state.info)
-    .then( (response) => {this.getItemData(this.state.info.name)})
+    .then( (response) => {this.getItemData(this.state.info.id)})
     .catch ( (err) => {console.log('error on post to drop: ', err)});
   }
 
-  getItemData(itemName) {
-    axios.get('/api/' + itemName)
+  getItemData(itemId) {
+    axios.get('/api/' + itemId)
     .then( ({data}) => {
-      this.setState({info: data[0]})
+      this.setState({
+        info: data,
+        categories: data.category
+      })
     })
     .catch( (err) => {console.log('error on get: ', err)});
   }
 
-  getCategories(itemName) {
-    axios.get('/api/categories/' + itemName)
-    .then( ({data}) => {
-      this.setState({categories: data})
-    })
-    .catch( (err) => {console.log('error on get to categories: ', err)});
-  }
+  // getCategories(itemName) {
+  //   axios.get('/api/categories/' + itemName)
+  //   .then( ({data}) => {
+  //     console.log(data[0])
+  //     this.setState({categories: data})
+  //   })
+  //   .catch( (err) => {console.log('error on get to categories: ', err)});
+  // }
 
   getEndPoint() {
     let url = window.location.href.split('/');
-    return url[url.length - 1] || 'flashlight';
+    return url[url.length - 1]
   }
 
   componentDidMount() {
     let pathEnd = this.getEndPoint()
-
     this.getItemData(pathEnd);
-    this.getCategories(pathEnd);
+    // this.getCategories(pathEnd);
   }
 
   render() {
@@ -85,5 +89,5 @@ export default class ProductInfo extends React.Component {
   }
 }
 
-window.Info = ProductInfo;
-// ReactDOM.render(<ProductInfo />, document.getElementById('product-info'));
+// window.Info = ProductInfo;
+// ReactDOM.hydrate(<ProductInfo />, document.getElementById('Info'));
