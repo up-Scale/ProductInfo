@@ -2,6 +2,7 @@ import React from 'react';
 import TimeLeft from './styled-components/TimeLeft.jsx';
 import UnitsSold from './styled-components/UnitsSold.jsx';
 import ShippingType from './styled-components/ShippingType.jsx';
+import moment from 'moment';
 
 const Shipping = ({shipping}) => {
 
@@ -17,7 +18,7 @@ const Shipping = ({shipping}) => {
 
   return(
     <div>
-      {getTimeDiff((new Date(shipping.time * 1000) - new Date()) / 1000)}  
+      {getTimeDiff((new Date(moment(shipping.deal_ends).unix() * 1000) - new Date()) / 1000)}  
       <UnitsSold>{`${shipping.units_sold} sold `}</UnitsSold> 
       <ShippingType>{shipping.shipping_option}</ShippingType>
     </div>

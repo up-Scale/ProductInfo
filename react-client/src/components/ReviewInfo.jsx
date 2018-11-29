@@ -8,14 +8,14 @@ const ReviewInfo = ({reviews}) => {
     <ReviewLine>
       <ReactStars
         count={5}
-        value={reviews.average_score}
+        value={parseInt(reviews.average_score)}
         size={24}
         color1={'#849493'}
         color2={'#14B6AD'}
         half={true}
         edit={false}
       />
-      <ReviewsSpan>{`(${reviews.number_of_reviews} reviews)`}</ReviewsSpan>
+      <ReviewsSpan>{`(${reviews.number_of_reviews || 100} reviews)`}</ReviewsSpan>
     </ReviewLine>
   )
 }

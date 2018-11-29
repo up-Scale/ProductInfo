@@ -4,15 +4,15 @@ import SalePrice from './styled-components/SalePrice.jsx';
 
 const Pricing = ({prices}) => {
   
-  const convertNumber = (x) => {
-    if (x) return x.toFixed(2).toLocaleString();
-  }
+  // const convertNumber = (x) => {
+  //   if (x) return x.toFixed(2);
+  // }
   
   return(
     <div>
       {prices.sale_price > 0 
-        ? <div><SalePrice>{convertNumber(prices.sale_price)}</SalePrice> <Price>{convertNumber(prices.price)}</Price></div> 
-        : <SalePrice>{convertNumber(prices.price)}</SalePrice> }
+        ? <div><SalePrice>{prices.sale_price}</SalePrice> <Price>{prices.price}</Price></div> 
+        : <SalePrice>{prices.price}</SalePrice> }
     </div>
   )
 }

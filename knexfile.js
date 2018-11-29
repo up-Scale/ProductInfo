@@ -2,15 +2,8 @@
 
 module.exports = {
 
-  development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './dev.sqlite3'
-    }
-  },
-
   staging: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: 'productInfo',
       user:     'kennisilverio',
@@ -18,14 +11,14 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 100
+      max: 150
     },
     migrations: {
       directory: __dirname + '/db/migrations'    }
   },
 
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: 'productInfo',
       user:     'kennisilverio',
@@ -33,12 +26,13 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 100
+      max: 150
     },
     migrations: {
       directory: __dirname + '/db/migrations'    }
   },
   development: {
+    debug: true,
     client: 'pg',
     connection: {
       user : 'kennisilverio',
@@ -47,7 +41,7 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 100
+      max: 150
     },
     migrations: {
       directory: __dirname + '/db/migrations'

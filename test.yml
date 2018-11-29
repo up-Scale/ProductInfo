@@ -6,4 +6,4 @@ config:
 scenarios:
   - flow:
     - get: 
-        url: "/api/Licensed Concrete Shirt"
+        url: "/api/13409"

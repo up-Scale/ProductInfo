@@ -4,12 +4,19 @@ import ListLi from './styled-components/Li.jsx';
 
 const Categories = ({categories}) => {
   return(
+    // <ListUl>
+    //   {categories.map( (cat, i) => 
+    //     <ListLi key={i}>
+    //       {i === categories.length - 1 ? `${cat.name}`: `${cat.name} > `}
+    //     </ListLi>  
+    //   )}
+    // </ListUl>
     <ListUl>
-      {categories.map( (cat, i) => 
-        <ListLi key={i}>
-          {i === categories.length - 1 ? `${cat.name}`: `${cat.name} > `}
-        </ListLi>  
-      )}
+
+      <ListLi>
+        {categories}
+      </ListLi>  
+
     </ListUl>
   )
 }

@@ -76,18 +76,17 @@
 //    KNEX
 
 
-var knex = require('knex')({
-  client: 'pg',
-  version: '7.6',
-  connection: {
-    host : 'localhost',
-    user : 'kennisilverio',
-    password : '',
-    database : 'productInfo'
-  },
-  max: 300,
-})
-// .catch(err => console.log(err, "err on db connect"))
+// var knex = require('knex')({
+//   client: 'pg',
+//   debug: true,
+//   connection: {
+//     host : 'localhost',
+//     user : 'kennisilverio',
+//     password : '',
+//     database : 'productInfo'
+//   }
+// })
+
 
 
 // knex.schema.hasTable('items').then(function(exists) {
@@ -118,9 +117,10 @@ var knex = require('knex')({
 //     .catch(err => console.log(err, "error in create categories table"))
 //   }
 // })
-module.exports = {
-  knex: knex,
-}
+
+// module.exports = {
+//   knex: knex,
+// }
 
 //        MONGODB
 
@@ -154,5 +154,4 @@ module.exports = {
 // module.exports = {
 //   db: db,
 //   Product: Product,
-//   knex: knex,
 // }
