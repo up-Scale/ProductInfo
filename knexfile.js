@@ -1,47 +1,24 @@
 // Update with your config settings.
+var DATABASE_URL = 'postgresql://kennisilverio:@ec2-54-147-229-89.compute-1.amazonaws.com/productInfo'
+
 
 module.exports = {
-
-  staging: {
-    client: 'pg',
-    connection: {
-      database: 'productInfo',
-      user:     'kennisilverio',
-      password: ''
-    },
-    pool: {
-      min: 2,
-      max: 150
-    },
-    migrations: {
-      directory: __dirname + '/db/migrations'    }
-  },
-
   production: {
     client: 'pg',
-    connection: {
-      database: 'productInfo',
-      user:     'kennisilverio',
-      password: ''
-    },
+    connection: DATABASE_URL,
     pool: {
       min: 2,
-      max: 150
+      max: 40
     },
     migrations: {
       directory: __dirname + '/db/migrations'    }
   },
   development: {
-    debug: true,
     client: 'pg',
-    connection: {
-      user : 'kennisilverio',
-      password : '',
-      database : 'productInfo'
-    },
+    connection: DATABASE_URL,
     pool: {
       min: 2,
-      max: 150
+      max: 40
     },
     migrations: {
       directory: __dirname + '/db/migrations'

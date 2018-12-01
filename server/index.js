@@ -1,11 +1,13 @@
-require('newrelic');
+// require('newrelic');
 const express = require('express');
 const parser = require('body-parser');
-const environment = process.env.NODE_ENV || 'development';    // if something else isn't setting ENV, use development
+const environment = process.env.NODE_ENV || 'production';    // if something else isn't setting ENV, use development
 const configuration = require('../knexfile')[environment];    // require environment's settings from knexfile
 const knex = require('knex')(configuration);  // connect to DB via knex using env's settings
 const {db, Product} = require('../db/index.js');
 const path = require('path');
+const redis = require('redis');
+const compression = require('compression');
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import ProductInfo from '../react-client/src/index.jsx';
@@ -16,6 +18,18 @@ import { ServerStyleSheet } from 'styled-components'; // <-- importing ServerSty
 let app = express();
 app.use(parser.json());
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(compression())
+// connect to Redis
+// const REDIS_URL = process.env.REDIS_URL;
+const client = redis.createClient();
+
+client.on('connect', () => {
+    console.log(`connected to redis`);
+});
+client.on('error', err => {
+    console.log(`Error: ${err}`);
+});
+
 // app.use('^/$', serverRenderer);
     // ORIGINAL
 
@@ -73,11 +87,25 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.get('/api/:prod_id', (req, res) => {
   let prod_id = req.params.prod_id;
-  knex('items').where({'id' : prod_id.toString()}).first()
-    .then(results => {
-      res.status(200).send(results)
+
+  const countKey = `${prod_id}:count`;
+  const infoKey = `${prod_id}:info`;
+  client.incr(countKey, (err, count) => {
+    client.hgetall(infoKey, function(err, info) {
+      if (info) {
+        return res.json({info});
+      }
+      knex.raw(`select * from "items" where id = ${prod_id}`)
+        .then(results => {
+          client.hmset(
+            infoKey, results.rows[0], function(err, result) {
+            if (err) console.log(err);
+          });
+          res.status(200).send(results.rows[0])
+        })
+        .catch(err => console.log(err, 'error in get api prod name'))
     })
-    .catch(err => console.log(err, 'error in get api prod name'))
+  })
 })
 
 // app.get('/api/categories/:prod_name', (req, res) => {
@@ -147,9 +175,9 @@ app.post('/api/drop', (req, res) => {
 // })
 app.get('/buy/:prod_id', (req, res) => {
   let prod_id = req.params.prod_id;
-  knex('items').where({'id' : prod_id.toString()}).first()
+  knex.raw(`select * from "items" where id = ${prod_id}`)
   .then(results => {
-    const initialState = { reminder: false, info: results, categories: results.category[results.category.length-1] === 's' ? results.category : results.category +'s' }
+    const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
     const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
     const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
     const appString = renderToString(React.createElement(ProductInfo, initialState));
@@ -159,10 +187,21 @@ app.get('/buy/:prod_id', (req, res) => {
       initialState: JSON.stringify(initialState),
     }));
   })
-  .catch(err => console.log(err, 'error in get api prod name'))
-
-
+  .catch(err => console.log(err, 'error in get buy prod name'))
 });
+
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javscript');
+  next();
+ });
+ app.get('*.css', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/css');
+  next();
+ });
 
 let port = 3001;
 app.listen(port, () => {

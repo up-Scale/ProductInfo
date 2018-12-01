@@ -1,5 +1,11 @@
 node_modules/
 config.js
 /react-client/dist/info.bundle.js
+/react-client/dist/info.bundleserver.js
+/react-client/dist/info.bundle.js.gz
+/react-client/dist/info.bundleserver.js.gz
 fec.pem
 db/mongo/products.csv
+newrelic.js
+newrelic_agent.log
+dump.rdb

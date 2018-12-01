@@ -55,16 +55,16 @@ export default class ProductInfo extends React.Component {
   //   .catch( (err) => {console.log('error on get to categories: ', err)});
   // }
 
-  getEndPoint() {
-    let url = window.location.href.split('/');
-    return url[url.length - 1]
-  }
+  // getEndPoint() {
+  //   let url = window.location.href.split('/');
+  //   return url[url.length - 1]
+  // }
 
-  componentDidMount() {
-    let pathEnd = this.getEndPoint()
-    this.getItemData(pathEnd);
-    // this.getCategories(pathEnd);
-  }
+  // componentDidMount() {
+  //   let pathEnd = this.getEndPoint()
+  //   this.getItemData(pathEnd);
+  //   // this.getCategories(pathEnd);
+  // }
 
   render() {
     return (
