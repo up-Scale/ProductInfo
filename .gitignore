@@ -9,3 +9,4 @@ db/mongo/products.csv
 newrelic.js
 newrelic_agent.log
 dump.rdb
+Dockerfile
