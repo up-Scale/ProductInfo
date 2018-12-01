@@ -21,7 +21,10 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(compression())
 // connect to Redis
 // const REDIS_URL = process.env.REDIS_URL;
-const client = redis.createClient();
+const client = redis.createClient({
+  port: 6379,
+  host: process.env.REDIS_HOST || 'localhost',
+});
 
 client.on('connect', () => {
     console.log(`connected to redis`);
