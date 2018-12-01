@@ -10,8 +10,8 @@ export default ({body, styles, initialState}) => {
         <body>
         <div id="Info">${body}</div>
         <script type="text/javascript" src="/info.bundle.js"></script>
-        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
         </body>
         </html>`
 }
