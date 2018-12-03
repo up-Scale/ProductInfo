@@ -208,8 +208,9 @@ app.get('*.js', function(req, res, next) {
  });
 
  app.get('/productinfohtml/:productname', (req, res) =>{
-   const productinfohtml = renderToString(React.createElement(ProductInfo, initialState));
-   res.send(productinfohtml);
+  const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
+  const productinfohtml = renderToString(React.createElement(ProductInfo, initialState));
+  res.send(productinfohtml);
  })
 let port = 3009;
 app.listen(process.env.PORT || port, () => {
