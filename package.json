@@ -11,7 +11,7 @@
     "seed": "knex seed:run",
     "mongoSeed": "bash db/mongo/seed.sh",
     "populate": "node db/mongo/seed.js",
-    "start" : "NODE_ENV=production REDIS_HOST=172.17.0.2 node server/bootstrap.js"
+    "start" : "node server/bootstrap.js"
   },
   "babel": {
     "presets": [
