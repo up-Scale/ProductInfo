@@ -203,8 +203,8 @@ app.get('*.js', function(req, res, next) {
   next();
  });
 
-let port = 3001;
-app.listen(port, () => {
+let port = 3009;
+app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${port}...`);
 })
 
