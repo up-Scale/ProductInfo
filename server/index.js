@@ -203,6 +203,9 @@ app.get('*.js', function(req, res, next) {
   next();
  });
 
+ app.get('/loaderio-*', function(req, res, next) {
+  res.sendFile(path.resolve('./loaderio-c6c352d14360b97cc35d42093c086fd1.txt'));
+ });
 let port = 3009;
 app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${port}...`);
