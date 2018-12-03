@@ -177,6 +177,7 @@ app.get('/buy/:prod_id', (req, res) => {
   let prod_id = req.params.prod_id;
   knex.raw(`select * from "items" where id = ${prod_id}`)
   .then(results => {
+    console.log('this is happeningg')
     const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
     const sheet = new ServerStyleSheet(); // <-- creating out stylesheet
     const styles = sheet.getStyleTags(); // <-- getting all the tags from the sheet
