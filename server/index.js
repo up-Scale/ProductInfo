@@ -206,6 +206,11 @@ app.get('*.js', function(req, res, next) {
  app.get('/loaderio-*', function(req, res, next) {
   res.sendFile(path.resolve('./loaderio-c6c352d14360b97cc35d42093c086fd1.txt'));
  });
+
+ app.get('/productinfohtml/:productname', (req, res) =>{
+   const productinfohtml = renderToString(React.createElement(ProductInfo, initialState));
+   res.send(productinfohtml);
+ })
 let port = 3009;
 app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${port}...`);
