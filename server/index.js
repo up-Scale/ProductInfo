@@ -207,11 +207,17 @@ app.get('*.js', function(req, res, next) {
   res.sendFile(path.resolve('./loaderio-c6c352d14360b97cc35d42093c086fd1.txt'));
  });
 
- app.get('/productinfohtml/:productname', (req, res) =>{
-  const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
-  const productinfohtml = renderToString(React.createElement(ProductInfo, initialState));
-  res.send(productinfohtml);
- })
+ app.get('/productinfohtml/:prod_id', (req, res) =>{
+  let prod_id = req.params.prod_id;
+  knex.raw(`select * from "items" where id = ${prod_id}`)
+  .then(results => {
+    const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
+    const appString = renderToString(React.createElement(ProductInfo, initialState));
+    res.send(appString);
+  })
+  .catch(err => console.log(err, 'error in get buy prod name'))
+});
+
 let port = 3009;
 app.listen(process.env.PORT || port, () => {
   console.log(`listening on port ${port}...`);
