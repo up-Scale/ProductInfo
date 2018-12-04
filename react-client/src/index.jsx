@@ -9,18 +9,20 @@ import JoinDropButton from './components/styled-components/JoinDropButton.jsx';
 import ReminderButton from './components/styled-components/ReminderButton.jsx';
 import ItemName from './components/styled-components/ItemName.jsx';
 import ItemNameLine from './components/styled-components/ItemNameLine.jsx';
-
-var axios = require('axios');
+import axios from 'axios';
 
 export default class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      reminder: false,
-      info: this.props.info || {},
-      categories: this.props.categories || []
+    if (this.props){
+      this.state = {
+        reminder: false,
+        info: this.props.info,
+        categories: this.props.categories
+      }
     }
-
+    
+    this.getItemData = this.getItemData.bind(this);
     this.toggleReminder = this.toggleReminder.bind(this);
     this.joinDrop = this.joinDrop.bind(this);
   }
@@ -31,19 +33,21 @@ export default class ProductInfo extends React.Component {
 
   joinDrop() {
     axios.post('/api/drop', this.state.info)
-    .then( (response) => {this.getItemData(this.state.info.id)})
+    .then( (response) => {
+      this.getItemData(this.state.info.id)
+    })
     .catch ( (err) => {console.log('error on post to drop: ', err)});
   }
 
   getItemData(itemId) {
     axios.get('/api/' + itemId)
     .then( ({data}) => {
-      this.setState({
-        info: data,
-        categories: data.category
+        this.setState({
+          info: data.info,
+          categories: data.info.category[data.info.category.length-1] === 's' ? data.info.category : data.info.category +'s'
+        })
       })
-    })
-    .catch( (err) => {console.log('error on get: ', err)});
+      .catch( (err) => {console.log('error on get: ', err)});
   }
 
   // getCategories(itemName) {

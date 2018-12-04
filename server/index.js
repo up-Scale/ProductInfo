@@ -88,23 +88,20 @@ client.on('error', err => {
 app.get('/api/:prod_id', (req, res) => {
   let prod_id = req.params.prod_id;
 
-  const countKey = `${prod_id}:count`;
-  const infoKey = `${prod_id}:info`;
-  client.incr(countKey, (err, count) => {
-    client.hgetall(infoKey, function(err, info) {
-      if (info) {
-        return res.json({info});
-      }
-      knex.raw(`select * from "items" where id = ${prod_id}`)
-        .then(results => {
-          client.hmset(
-            infoKey, results.rows[0], function(err, result) {
-            if (err) console.log(err);
-          });
-          res.status(200).send(results.rows[0])
-        })
-        .catch(err => console.log(err, 'error in get api prod name'))
-    })
+  client.get(prod_id, function(err, info) {
+    if (info) {
+      return res.json(JSON.parse(info));
+    }
+    knex.raw(`select * from "items" where id = ${prod_id}`)
+      .then(results => {
+        parseInt(results.rows[0].drop_count)
+        client.set(
+          prod_id, JSON.stringify({info: results.rows[0]}), function(err, result) {
+          if (err) console.log(err);
+        });
+        res.status(200).send(results.rows[0])
+      })
+      .catch(err => console.log(err, 'error in get api prod name'))
   })
 })
 
@@ -122,30 +119,30 @@ app.get('/api/:prod_id', (req, res) => {
 // })
 
 app.post('/api/drop', (req, res) => {
-  var prod_name = req.body.name;
-  var count = req.body.drop_count + 1;
+  var count = parseInt(req.body.drop_count) + 1;
   var id = req.body.id;
+  const infoKey = `${id}:info`;
   if (count % 5 === 0) {
     var oldPrice = req.body.sale_price || req.body.price;
     var newPrice = oldPrice * .9;
-    knex('items').where({
-      'id' : id,
-      'name' : prod_name,
-    })
-    .update({
-      'drop_count' : count,
-      'price' : oldPrice,
-      'sale_price' : newPrice,
-    })
+    knex.raw(`update "items" set drop_count = ${count}, price = ${oldPrice}, sale_price = ${newPrice} where id = ${id} returning *`)
     .then(results => {
+      client.set(
+        id, JSON.stringify({info: results.rows[0]}), function(err, result) {
+        if (err) console.log(err);
+      });
       res.status(201).send() 
     })
     .catch(err => {
       console.log(err, "error in updating drop count by 5")
     })
   } else {
-    knex.raw(`update "items" set "drop_count" = ${count} where "id" = ${id}`)
+    knex.raw(`update "items" set drop_count = ${count} where id = ${id} returning *`)
     .then(results => {
+      client.set(
+        id, JSON.stringify({info: results.rows[0]}), function(err, result) {
+        if (err) console.log(err);
+      });
       res.status(201).send()
     })
     .catch(err => {
