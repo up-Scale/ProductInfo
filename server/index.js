@@ -144,10 +144,7 @@ app.post('/api/drop', (req, res) => {
       console.log(err, "error in updating drop count by 5")
     })
   } else {
-    knex('items').where({
-      'id' : id,
-      'name' : prod_name
-    }).update({'drop_count' : count})
+    knex.raw(`update "items" set "drop_count" = ${count} where "id" = ${id}`)
     .then(results => {
       res.status(201).send()
     })
@@ -213,7 +210,7 @@ app.get('*.js', function(req, res, next) {
   .then(results => {
     const initialState = { reminder: false, info: results.rows[0], categories: results.rows[0].category[results.rows[0].category.length-1] === 's' ? results.rows[0].category : results.rows[0].category +'s' }
     const appString = renderToString(React.createElement(ProductInfo, initialState));
-    res.send(appString);
+    res.send({appString, initialState});
   })
   .catch(err => console.log(err, 'error in get buy prod name'))
 });
